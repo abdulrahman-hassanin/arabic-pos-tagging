@@ -3,6 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import arabic_reshaper
 from bidi.algorithm import get_display
+import re
 
 class POS_Tagging:
     def __init__(self, text) -> None:
@@ -48,7 +49,15 @@ class POS_Tagging:
         # draw the graph
         plt.figure()
         pos = nx.spring_layout(G, k=0.5)
-        nx.draw(G, pos, with_labels=True, alpha=0.7)
+        
+        color_map = []
+        for node in G:
+            if re.search('[a-zA-Z]', node) :
+                color_map.append('darksalmon')   
+            else: 
+                color_map.append('steelblue')
+                
+        nx.draw(G, pos, node_color=color_map, with_labels=True, alpha=0.7)
         plt.title("Arabic POS-Tagging with NetworkX")  # set title
 
         # showing the graph
